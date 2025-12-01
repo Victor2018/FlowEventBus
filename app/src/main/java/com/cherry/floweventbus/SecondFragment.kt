@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.cherry.floweventbus.databinding.FragmentSecondBinding
-import com.cherry.floweventbus.event.GlobalEvent
+import com.cherry.library.floweventbus.event.GlobalEvent
 import com.cherry.library.floweventbus.post.postEvent
 
 /**

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.cherry.floweventbus.databinding.ActivitySecondBinding
-import com.cherry.floweventbus.event.GlobalEvent
+import com.cherry.library.floweventbus.event.GlobalEvent
 import com.cherry.library.floweventbus.observe.observeEvent
 import com.cherry.library.floweventbus.post.postEvent
 

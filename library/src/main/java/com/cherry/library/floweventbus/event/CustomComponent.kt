@@ -1,8 +1,7 @@
-package com.cherry.floweventbus.event
+package com.cherry.library.floweventbus.event
 
 import android.util.Log
 import androidx.fragment.app.Fragment
-import com.cherry.floweventbus.MainActivity
 import com.cherry.library.floweventbus.observe.observeEvent
 import com.cherry.library.floweventbus.post.postEvent
 import kotlinx.coroutines.CoroutineScope
