@@ -12,38 +12,46 @@ import com.cherry.library.floweventbus.store.ApplicationScopeViewModelProvider
  * File: JavaPostEventUtil
  * Author: Victor
  * Date: 2025/12/2 10:17
- * Description: 
+ * Description: Java api 支持
  * -----------------------------------------------------------------
  */
 
 object JavaPostEventUtil {
     // 全局事件 - Java友好版本
     @JvmStatic
-    @JvmOverloads
-    fun <T> postEvent(event: T, timeMillis: Long = 0L) {
+    fun <T> javaPostEvent(event: T) {
+        javaPostEvent(event,0L)
+    }
+
+    @JvmStatic
+    fun <T> javaPostEvent(event: T,clazz: Class<T>) {
+        javaPostEvent(event,clazz,0L)
+    }
+
+    @JvmStatic
+    fun <T> javaPostEvent(event: T, timeMillis: Long = 0L) {
         ApplicationScopeViewModelProvider.getApplicationScopeViewModel(EventBusCore::class.java)
             .postEvent(event!!::class.java.name, event, timeMillis)
     }
 
     // 带Class参数的版本（Java需要）
     @JvmStatic
-    fun <T> postEvent(event: T,clazz: Class<T>, timeMillis: Long = 0L) {
+    fun <T> javaPostEvent(event: T,clazz: Class<T>, timeMillis: Long = 0L) {
         ApplicationScopeViewModelProvider.getApplicationScopeViewModel(EventBusCore::class.java)
             .postEvent(clazz.name, event!!, timeMillis)
     }
 
     // 限定范围事件 - Java友好版本
     @JvmStatic
-    @JvmOverloads
-    fun <T> postEvent(scope: ViewModelStoreOwner, event: T, timeMillis: Long = 0L) {
-        ViewModelProvider(scope).get(EventBusCore::class.java)
+    fun <T> javaPostEvent(scope: ViewModelStoreOwner, event: T, timeMillis: Long = 0L) {
+        ViewModelProvider(scope)[EventBusCore::class.java]
             .postEvent(event!!::class.java.name, event, timeMillis)
     }
 
     // 带Class参数的版本（Java需要）
     @JvmStatic
-    fun <T> postEvent(scope: ViewModelStoreOwner, clazz: Class<T>, event: T, timeMillis: Long = 0L) {
-        ViewModelProvider(scope).get(EventBusCore::class.java)
+    fun <T> javaPostEvent(scope: ViewModelStoreOwner, clazz: Class<T>, event: T, timeMillis: Long = 0L) {
+        ViewModelProvider(scope)[EventBusCore::class.java]
             .postEvent(clazz.name, event!!, timeMillis)
     }
 }
