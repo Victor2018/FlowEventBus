@@ -1,3 +1,3 @@
 package com.cherry.library.floweventbus.event
 
-data class FragmentEvent<T>(val data: T)
+data class FragmentEvent(val event: String)

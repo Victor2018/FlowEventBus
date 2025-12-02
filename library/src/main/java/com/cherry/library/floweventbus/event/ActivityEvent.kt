@@ -1,3 +1,3 @@
 package com.cherry.library.floweventbus.event
 
-data class ActivityEvent<T>(val data: T)
+data class ActivityEvent(val event: String)

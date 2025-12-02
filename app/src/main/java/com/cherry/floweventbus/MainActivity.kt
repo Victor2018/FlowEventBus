@@ -8,6 +8,7 @@ import androidx.lifecycle.Lifecycle
 import com.cherry.floweventbus.databinding.ActivityMainBinding
 import com.cherry.floweventbus.databinding.ContentMainBinding
 import com.cherry.library.floweventbus.event.ActivityEvent
+import com.cherry.library.floweventbus.event.GlobalDataEvent
 import com.cherry.library.floweventbus.event.GlobalEvent
 import com.cherry.library.floweventbus.observe.observeEvent
 import com.cherry.library.floweventbus.post.postEvent
@@ -37,14 +38,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         mContentMainBinding.sendEvent.setOnClickListener {
-            postEvent(GlobalEvent("GlobalEvent来自MainActivity"))
-
             val data = UserInfo()
             data.name = "victor"
             data.sex = "男"
             data.mail = "victor423099@gmail.com"
             data.address = "广东省深圳市宝安区渔业旧村一巷198号"
-            postEvent(GlobalEvent(data))
+            postEvent(GlobalDataEvent("has_data_event",data))
         }
 
         mContentMainBinding.openSec.setOnClickListener {
@@ -55,13 +54,14 @@ class MainActivity : AppCompatActivity() {
     //跨页面
     private fun observeGlobalEvents() {
         //全局事件
-        observeEvent<GlobalEvent<String>> { value ->
-            Log.d(TAG, "MainActivity received GlobalEvent  :${value.data}")
-            mContentMainBinding.mTvActivityResult.text = value.data
+        observeEvent<GlobalEvent> { value ->
+            Log.d(TAG, "MainActivity received GlobalEvent1  :${value.event}")
+            mContentMainBinding.mTvActivityResult.text = value.event
         }
-        observeEvent<GlobalEvent<UserInfo>> { value ->
-            Log.d(TAG, "MainActivity received GlobalEvent  :${value.data}")
-            mContentMainBinding.mTvActivityResult.text = value.data.toString()
+        observeEvent<GlobalDataEvent<UserInfo>> { value ->
+            Log.d(TAG, "MainActivity received GlobalEvent2  :${value.event}")
+            Log.d(TAG, "MainActivity received GlobalEvent2  :${value.data}")
+            mContentMainBinding.mTvActivityResult.text =  "${value.event}-${value.data}"
         }
     }
 
@@ -69,21 +69,21 @@ class MainActivity : AppCompatActivity() {
     private fun observeActivityScopeEvents() {
         //Activity 级别的 事件
         //自定义事件
-        observeEvent<ActivityEvent<String>>(this) {
-            Log.d(TAG, "MainActivity received ActivityEvent: ${it.data}")
-            mContentMainBinding.mTvActivityResult.text = it.data
+        observeEvent<ActivityEvent>(this) {
+            Log.d(TAG, "MainActivity received ActivityEvent: ${it.event}")
+            mContentMainBinding.mTvActivityResult.text = it.event
         }
 
 //        //自定义事件 切换线程
-        observeEvent<ActivityEvent<String>>(Dispatchers.IO) {
-            Log.d(TAG, "received ActivityEvent:${it.data} " + Thread.currentThread().name)
-            mContentMainBinding.mTvActivityResult.text = "received ActivityEvent:${it.data} " + Thread.currentThread().name
+        observeEvent<ActivityEvent>(Dispatchers.IO) {
+            Log.d(TAG, "received ActivityEvent:${it.event} " + Thread.currentThread().name)
+            mContentMainBinding.mTvActivityResult.text = "received ActivityEvent:${it.event} " + Thread.currentThread().name
         }
 //
 //        //自定义事件 指定最小生命周期
-        observeEvent<ActivityEvent<String>>(minActiveState = Lifecycle.State.DESTROYED) {
-            Log.d(TAG, "received ActivityEvent:${it.data}   >  DESTROYED")
-            mContentMainBinding.mTvActivityResult.text = "${it.data}   >  DESTROYED"
+        observeEvent<ActivityEvent>(minActiveState = Lifecycle.State.DESTROYED) {
+            Log.d(TAG, "received ActivityEvent:${it.event}   >  DESTROYED")
+            mContentMainBinding.mTvActivityResult.text = "${it.event}   >  DESTROYED"
         }
 
 //        //自定义事件 切换线程 + 指定最小生命周期

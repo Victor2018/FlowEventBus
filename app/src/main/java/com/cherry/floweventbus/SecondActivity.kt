@@ -19,21 +19,21 @@ class SecondActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //粘性事件
-        observeEvent<GlobalEvent<String>>(isSticky = true) {
-            Log.d(TAG, "SecActivity received ActivityEvent isSticky :${it.data}")
+        observeEvent<GlobalEvent>(isSticky = true) {
+            Log.d(TAG, "SecActivity received ActivityEvent isSticky :${it.event}")
         }
 
         binding.sendCustomEvent.setOnClickListener {
-            postEvent(GlobalEvent(data = "Hello SharedFlow now"))
+            postEvent(GlobalEvent("Hello SharedFlow now"))
         }
 
         binding.sendCustomDelayEvent.setOnClickListener {
-            postEvent(GlobalEvent(data = "Hello SharedFlow delay"), 1000)
+            postEvent(GlobalEvent("Hello SharedFlow delay"), 1000)
         }
 
         binding.send100Event.setOnClickListener {
             for (i in 1..100) {
-                postEvent(GlobalEvent(data = "Hello SharedFlow now $i"))
+                postEvent(GlobalEvent("Hello SharedFlow now $i"))
             }
         }
     }

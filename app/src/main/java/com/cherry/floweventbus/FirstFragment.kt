@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.cherry.floweventbus.databinding.FragmentFirstBinding
+import com.cherry.library.floweventbus.event.GlobalDataEvent
 import com.cherry.library.floweventbus.event.GlobalEvent
 import com.cherry.library.floweventbus.observe.observeEvent
 
@@ -39,7 +40,7 @@ class FirstFragment : Fragment() {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
 
-        observeEvent<GlobalEvent<UserInfo>> { value ->
+        observeEvent<GlobalDataEvent<UserInfo>> { value ->
             binding.textviewFirst.text = value.data.toString()
         }
     }
