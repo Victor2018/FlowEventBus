@@ -17,16 +17,15 @@ class CustomComponent {
     }
 
     fun observer(fragment: Fragment) {
-        observeEvent<GlobalEvent>(CoroutineScope(Dispatchers.Main)) {
-            Log.d(TAG, "CustomComponent received GlobalEvent 3:${it.name}")
+        observeEvent<GlobalEvent<String>>(CoroutineScope(Dispatchers.Main)) {
+            Log.d(TAG, "CustomComponent received GlobalEvent 3:${it.data}")
         }
 
-        observeEvent<FragmentEvent>(fragment) {
-            Log.d(TAG, "CustomComponent received FragmentEvent 3:${it.name}")
+        observeEvent<FragmentEvent<String>>(fragment) {
+            Log.d(TAG, "CustomComponent received FragmentEvent 3:${it.data}")
         }
-        observeEvent<ActivityEvent>(fragment.requireActivity()) {
-            Log.d(TAG, "CustomComponent received ActivityEvent 3:${it.name}")
-
+        observeEvent<ActivityEvent<String>>(fragment.requireActivity()) {
+            Log.d(TAG, "CustomComponent received ActivityEvent 3:${it.data}")
         }
     }
 }

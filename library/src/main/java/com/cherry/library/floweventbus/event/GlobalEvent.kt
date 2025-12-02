@@ -1,3 +1,3 @@
 package com.cherry.library.floweventbus.event
 
-data class GlobalEvent(val name:String)
+data class GlobalEvent<T>(val data: T)
