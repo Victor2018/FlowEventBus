@@ -34,7 +34,6 @@ object JavaPostEventUtil {
             .postEvent(event!!::class.java.name, event, timeMillis)
     }
 
-    // 带Class参数的版本（Java需要）
     @JvmStatic
     fun <T> javaPostEvent(event: T,clazz: Class<T>, timeMillis: Long = 0L) {
         ApplicationScopeViewModelProvider.getApplicationScopeViewModel(EventBusCore::class.java)
@@ -43,14 +42,23 @@ object JavaPostEventUtil {
 
     // 限定范围事件 - Java友好版本
     @JvmStatic
-    fun <T> javaPostEvent(scope: ViewModelStoreOwner, event: T, timeMillis: Long = 0L) {
-        ViewModelProvider(scope)[EventBusCore::class.java]
-            .postEvent(event!!::class.java.name, event, timeMillis)
+    fun <T> javaPostEvent(scope: ViewModelStoreOwner, event: T) {
+        javaPostEvent(scope,event, 0L)
     }
 
-    // 带Class参数的版本（Java需要）
     @JvmStatic
-    fun <T> javaPostEvent(scope: ViewModelStoreOwner, clazz: Class<T>, event: T, timeMillis: Long = 0L) {
+    fun <T> javaPostEvent(scope: ViewModelStoreOwner, event: T,clazz: Class<T>) {
+        javaPostEvent(scope,event,clazz, 0L)
+    }
+
+    @JvmStatic
+    fun <T> javaPostEvent(scope: ViewModelStoreOwner, event: T, timeMillis: Long = 0L) {
+        ViewModelProvider(scope)[EventBusCore::class.java]
+            .postEvent(event!!::class.java.name, event!!, timeMillis)
+    }
+
+    @JvmStatic
+    fun <T> javaPostEvent(scope: ViewModelStoreOwner, event: T,clazz: Class<T>, timeMillis: Long = 0L) {
         ViewModelProvider(scope)[EventBusCore::class.java]
             .postEvent(clazz.name, event!!, timeMillis)
     }
