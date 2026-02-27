@@ -24,7 +24,7 @@ class SecondActivity : AppCompatActivity() {
         }
 
         binding.sendCustomEvent.setOnClickListener {
-            postEvent(GlobalEvent("Hello SharedFlow now"))
+            postEvent(GlobalEvent("Hello SharedFlow now66666666666"))
         }
 
         binding.sendCustomDelayEvent.setOnClickListener {

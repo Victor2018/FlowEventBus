@@ -3,6 +3,7 @@ package com.cherry.floweventbus
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import com.cherry.floweventbus.databinding.ActivityMainBinding
@@ -54,9 +55,10 @@ class MainActivity : AppCompatActivity() {
     //跨页面
     private fun observeGlobalEvents() {
         //全局事件
-        observeEvent<GlobalEvent> { value ->
+        observeEvent<GlobalEvent>(minActiveState = Lifecycle.State.CREATED) { value ->
             Log.d(TAG, "MainActivity received GlobalEvent1  :${value.event}")
             mContentMainBinding.mTvActivityResult.text = value.event
+            Toast.makeText(this,value.event, Toast.LENGTH_SHORT).show()
         }
         observeEvent<GlobalDataEvent<UserInfo>> { value ->
             Log.d(TAG, "MainActivity received GlobalEvent2  :${value.event}")
